@@ -34,7 +34,12 @@ endif()
 configure_file(${CMAKE_SOURCE_DIR}/src/config.h.in ${CMAKE_BINARY_DIR}/config.h)
 
 include_directories(${CMAKE_BINARY_DIR})
-include_directories(${CMAKE_SOURCE_DIR}/src)
+include_directories(${CMAKE_SOURCE_DIR}/src/)
+include_directories(${CMAKE_SOURCE_DIR}/ext/include/)
 
 file(GLOB_RECURSE source_files ${CMAKE_SOURCE_DIR}/src/*)
 add_executable(plompt ${source_files})
+target_link_libraries(plompt dl)
+
+link_directories(${CMAKE_SOURCE_DIR}/ext/lib/)
+target_link_libraries(plompt config++)
