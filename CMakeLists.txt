@@ -21,6 +21,9 @@ endif()
 set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -Werror -pedantic")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -ggdb")
 
+# Option
+option(BUILD_SHARED_LIBS "Build shared library" ON)
+
 # Set a default build type if none was specified
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   message(STATUS "Setting build type to 'Debug' as none was specified.")

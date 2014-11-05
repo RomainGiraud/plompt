@@ -10,8 +10,11 @@
 class Prompt
 {
 public:
+    Prompt();
     Prompt(Shell* shell);
     ~Prompt();
+
+    void load(const std::string& filename);
 
     void add(Segment* segment);
 

@@ -14,17 +14,37 @@ int main(int argc, char *argv[])
 {
 	cout << "version: " << PLOMPT_VERSION_STRING << endl;
 
-    PluginManager manager;
-    manager.load("myplugin");
-    Plugin *mp = manager.get("myplugin");
-    int x = mp->get();
-    cout << "x = " << x << endl;
+    try
+    {
+        /*
+        PluginManager manager;
+        manager.load("myplugin");
+        Plugin *mp = manager.get("myplugin");
+        int x = mp->get();
+        cout << "x = " << x << endl;
+        */
 
-    Prompt prompt (new BashShell());
-    prompt.add(new UserNameSegment(Style(Color::White, Color::Blue)));
-    prompt.add(new CurrentDirSegment(Style(Color::White, Color::DarkGray)));
+        Prompt prompt;
+        prompt.load("/home/romain/Documents/dev/prompt/plompt/scripts/default.cfg");
 
-    cout << prompt << flush;
+        /*
+        Prompt prompt (new BashShell());
+        prompt.add(new UserNameSegment(Style(Color::White, Color::Blue)));
+        prompt.add(new CurrentDirSegment(Style(Color::White, Color::DarkGray)));
+        */
+
+        cout << prompt << flush;
+    }
+    catch (const std::string& error)
+    {
+        cerr << "[error] " << error << endl;
+        return 1;
+    }
+    catch (...)
+    {
+        cerr << "[error] Unknown" << endl;
+        return 1;
+    }
 
 	return 0;
 }
