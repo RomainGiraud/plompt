@@ -1,7 +1,7 @@
 #ifndef CURRENTDIR_SEGMENT_H
 #define CURRENTDIR_SEGMENT_H
 
-#include "segment.h"
+#include <segment/segment.h>
 
 class CurrentDirSegment : public Segment
 {

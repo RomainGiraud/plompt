@@ -1,7 +1,7 @@
 #ifndef USERNAME_SEGMENT_H
 #define USERNAME_SEGMENT_H
 
-#include "segment.h"
+#include <segment/segment.h>
 
 class UserNameSegment : public Segment
 {

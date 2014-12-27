@@ -1,4 +1,4 @@
-#include "segment.h"
+#include <segment/segment.h>
 
 Segment::Segment(Style style)
 	: _style(style)

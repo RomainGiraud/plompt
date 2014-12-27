@@ -1,7 +1,7 @@
 #ifndef STYLE_H
 #define STYLE_H
 
-#include "color.h"
+#include <color.h>
 
 class Style
 {

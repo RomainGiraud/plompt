@@ -1,4 +1,4 @@
-#include "currentdir_segment.h"
+#include <segment/currentdir_segment.h>
 
 #include <unistd.h>
 

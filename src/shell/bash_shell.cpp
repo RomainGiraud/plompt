@@ -1,4 +1,4 @@
-#include "shell.h"
+#include <shell/bash_shell.h>
 
 #include <sstream>
 

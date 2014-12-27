@@ -1,9 +1,9 @@
 #ifndef SEGMENT_H
 #define SEGMENT_H
 
-#include <iostream>
+#include <style.h>
 
-#include "style.h"
+#include <iostream>
 
 class Segment
 {

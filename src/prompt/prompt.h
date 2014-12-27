@@ -4,8 +4,8 @@
 #include <iostream>
 #include <list>
 
-#include "shell.h"
-#include "segment.h"
+class Shell;
+class Segment;
 
 class Prompt
 {
@@ -18,9 +18,10 @@ public:
 
     void add(Segment* segment);
 
+    virtual void print(std::ostream& os) const = 0;
     friend std::ostream& operator<<(std::ostream& os, const Prompt& prompt);
 
-private:
+protected:
 	Shell* _shell;
     typedef std::list <Segment*> SegmentList;
     SegmentList _segments;
