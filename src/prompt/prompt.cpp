@@ -57,7 +57,15 @@ void Prompt::load(const std::string& filename)
 
 void Prompt::add(Segment* segment)
 {
+    segment->setPrompt(this);
     _segments.push_back(segment);
+}
+
+std::string Prompt::toString() const
+{
+    ostringstream os;
+    print(os);
+    return os.str();
 }
 
 std::ostream& operator<<(std::ostream& os, const Prompt& prompt)

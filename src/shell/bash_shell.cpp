@@ -155,6 +155,12 @@ std::string BashShell::generate(const Style& style) const
 			oss << bg_light_cyan;
 			break;
 	}
+
+	if (style.isBold())
+	{
+		oss << "$(tput bold)";
+	}
+
 	return oss.str();
 }
 

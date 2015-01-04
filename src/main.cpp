@@ -9,38 +9,50 @@
 #include <segment/username_segment.h>
 #include <segment/hostname_segment.h>
 #include <segment/currentdir_segment.h>
-#include <segment/separator_segment.h>
+#include <segment/text_segment.h>
+#include <segment/git_segment.h>
+#include <tools.h>
+#include <special_characters.h>
+
+#ifdef NDEBUG
+#define _ELPP_DISABLE_LOGS
+#endif
+#define _ELPP_NO_DEFAULT_LOG_FILE
+#include <easylogging++.h>
+_INITIALIZE_EASYLOGGINGPP
 
 using namespace std;
 
 int main(int argc, char *argv[])
 {
-	cout << "version: " << PLOMPT_VERSION_STRING << endl;
+#ifndef NDEBUG
+    LOG(INFO) << "plompt debug mode";
+    LOG(INFO) << "version: " << PLOMPT_VERSION_STRING;
+#endif
 
     try
     {
-        /*
-        PluginManager manager;
-        manager.load("myplugin");
-        Plugin *mp = manager.get("myplugin");
-        int x = mp->get();
-        cout << "x = " << x << endl;
-        */
-
-        /*
-        Prompt prompt;
-        prompt.load("/home/romain/Documents/dev/prompt/plompt/scripts/default.cfg");
-        */
-
         Prompt *prompt = new CustomPrompt(new BashShell());
-        prompt->add(new UserNameSegment(Style(Color::Green, Color::Default)));
-        prompt->add(new SeparatorSegment(Style(Color::Default, Color::Default), "@"));
-        prompt->add(new HostnameSegment(Style(Color::Yellow, Color::Default)));
-        prompt->add(new SeparatorSegment(Style(Color::Default, Color::Default), " "));
-        prompt->add(new CurrentDirSegment(Style(Color::Red, Color::Default)));
-        prompt->add(new SeparatorSegment(Style(Color::Default, Color::Default), "$ "));
+        if (argc == 2)
+        {
+            if (string(argv[1]) == "0")
+                prompt->add(new TextSegment(Style(Color::Green, Color::Black), c_mark));
+            else
+                prompt->add(new TextSegment(Style(Color::Red, Color::Black), x_mark));
 
-        cout << (*prompt) << flush;
+            prompt->add(new TextSegment(Style(Color::Default, Color::Black), " "));
+        }
+        prompt->add(new CurrentDirSegment(Style(Color::Yellow, Color::Black), 4));
+        prompt->add(new GitSegment(Style(Color::Blue, Color::Black)));
+        prompt->add(new TextSegment(Style(Color::Black, Color::Default), separator + string(" ")));
+
+        /*
+        Prompt *prompt2 = new ArrowPrompt(new BashShell());
+        prompt2->add(new CurrentDirSegment(Style(Color::LightGray, Color::Black)));
+        prompt2->add(new GitSegment(Style(Color::Green, Color::Black)));
+        */
+
+        cout << prompt->toString() << flush;
     }
     catch (const std::string& error)
     {

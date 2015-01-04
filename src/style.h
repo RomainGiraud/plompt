@@ -6,7 +6,8 @@
 class Style
 {
 public:
-    Style(Color fg, Color bg);
+    Style();
+    explicit Style(Color fg, Color bg);
 
     inline const Color& getForeground() const
     {
@@ -16,6 +17,26 @@ public:
     inline const Color& getBackground() const
     {
     	return _background;
+    }
+
+    inline bool isBold() const
+    {
+        return _isBold;
+    }
+
+    inline void setBold(bool bold)
+    {
+        _isBold = bold;
+    }
+
+    inline bool isUnderline() const
+    {
+        return _isUnderline;
+    }
+
+    inline void setUnderline(bool underline)
+    {
+        _isUnderline = underline;
     }
 
 private:

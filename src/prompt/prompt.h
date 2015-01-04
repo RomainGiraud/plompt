@@ -14,9 +14,15 @@ public:
     Prompt(Shell* shell);
     ~Prompt();
 
-    void load(const std::string& filename);
+    inline const Shell* getShell() const
+    {
+        return _shell;
+    }
 
+    void load(const std::string& filename);
     void add(Segment* segment);
+
+    std::string toString() const;
 
     virtual void print(std::ostream& os) const = 0;
     friend std::ostream& operator<<(std::ostream& os, const Prompt& prompt);
