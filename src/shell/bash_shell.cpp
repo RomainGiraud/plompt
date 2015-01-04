@@ -161,10 +161,15 @@ std::string BashShell::generate(const Style& style) const
 		oss << "$(tput bold)";
 	}
 
+	if (style.isUnderline())
+	{
+		oss << "$(tput smul)";
+	}
+
 	return oss.str();
 }
 
 std::string BashShell::reset() const
 {
-	return string(fg_def) + string(bg_def);
+	return "$(tput sgr0; tput op)";
 }
