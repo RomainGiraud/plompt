@@ -158,12 +158,12 @@ std::string BashShell::generate(const Style& style) const
 
 	if (style.isBold())
 	{
-		oss << "$(tput bold)";
+		oss << "\\[$(tput bold)\\]";
 	}
 
 	if (style.isUnderline())
 	{
-		oss << "$(tput smul)";
+		oss << "\\[$(tput smul)\\]";
 	}
 
 	return oss.str();
@@ -171,5 +171,5 @@ std::string BashShell::generate(const Style& style) const
 
 std::string BashShell::reset() const
 {
-	return "$(tput sgr0; tput op)";
+	return "\\[$(tput sgr0; tput op)\\]";
 }
