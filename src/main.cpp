@@ -25,10 +25,8 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-#ifndef NDEBUG
     LOG(INFO) << "plompt debug mode";
     LOG(INFO) << "version: " << PLOMPT_VERSION_STRING;
-#endif
 
     try
     {
