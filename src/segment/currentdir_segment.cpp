@@ -39,54 +39,60 @@ void CurrentDirSegment::print(std::ostream& os) const
     char *buffer = new char[buffer_size];
     if (getcwd(buffer, buffer_size) == 0)
     {
-        os << "<dir>";
-    }
-    else
-    {
-        string full(buffer);
-        char* env = getenv("HOME");
-        if (env != 0)
+        char* env = getenv("PWD");
+        if (strlen(env) >= buffer_size)
         {
-            string home(env);
-            pair<string::iterator, string::iterator> ret = mismatch(full.begin(), full.end(), home.begin());
+            LOG(ERROR) << "current directory invalid";
+            os << "<dir>";
+            return;
+        }
 
-            string path;
-            if (ret.second == home.end())
-            {
-                path = "~";
+        strcpy(buffer, env);
+    }
 
-                if (ret.first != full.end())
-                    path.append(ret.first, full.end());
-            }
-            else
-                path.assign(full.begin(), full.end());
+    string full(buffer);
+    char* env = getenv("HOME");
+    if (env != 0)
+    {
+        string home(env);
+        pair<string::iterator, string::iterator> ret = mismatch(full.begin(), full.end(), home.begin());
 
-            vector<string> tokens;
-            Tools::split(path, '/', true, tokens);
+        string path;
+        if (ret.second == home.end())
+        {
+            path = "~";
 
-            //LOG(INFO) << "path: " << path;
-            if (path[0] == '/')
-                printSeparator(os);
+            if (ret.first != full.end())
+                path.append(ret.first, full.end());
+        }
+        else
+            path.assign(full.begin(), full.end());
 
-            vector<string>::const_iterator it = tokens.cbegin();
-            if (tokens.size() > _size_max)
-            {
-                os << (*it);
-                printSeparator(os);
-                os << ellipsis;
-                printSeparator(os);
+        vector<string> tokens;
+        Tools::split(path, '/', true, tokens);
+
+        if (path[0] == '/')
+            printSeparator(os);
+
+        vector<string>::const_iterator it = tokens.cbegin();
+        if (tokens.size() > _size_max)
+        {
+            os << (*it);
+            printSeparator(os);
+            os << ellipsis;
+            printSeparator(os);
+            ++it;
+
+            for (unsigned int i = 0; i < (tokens.size() + 1) - _size_max; ++i)
                 ++it;
+        }
 
-                for (unsigned int i = 0; i < (tokens.size() + 1) - _size_max; ++i)
-                    ++it;
-            }
-
-            for ( ; it != tokens.cend(); ++it)
-            {
-                os << (*it);
-                printSeparator(os);
-            }
+        for ( ; it != tokens.cend(); ++it)
+        {
+            os << (*it);
+            printSeparator(os);
         }
     }
+
     delete[] buffer;
 }
