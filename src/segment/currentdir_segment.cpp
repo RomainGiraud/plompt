@@ -21,7 +21,7 @@ using std::pair;
 using std::mismatch;
 
 CurrentDirSegment::CurrentDirSegment(Style style, unsigned int size_max)
-    : Segment(style), _size_max(size_max)
+    : Segment(style), _size_max(size_max), _display_links(false)
 {
 }
 
@@ -37,7 +37,17 @@ void CurrentDirSegment::print(std::ostream& os) const
 {
     size_t buffer_size = 1024;
     char *buffer = new char[buffer_size];
-    if (getcwd(buffer, buffer_size) == 0)
+
+    if (_display_links)
+    {
+        if (getcwd(buffer, buffer_size) == 0)
+        {
+            LOG(ERROR) << "current directory invalid";
+            os << "<dir>";
+            return;
+        }
+    }
+    else
     {
         char* env = getenv("PWD");
         if (strlen(env) >= buffer_size)

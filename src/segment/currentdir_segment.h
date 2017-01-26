@@ -12,6 +12,7 @@ public:
 
 private:
 	unsigned int _size_max;
+	bool _display_links;
 
 	void printSeparator(std::ostream& os) const;
 };
